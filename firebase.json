@@ -1,0 +1,29 @@
+{
+  "storage": {
+    "rules": "storage.rules",
+    "cors": [
+      {
+        "origin": [
+          "*"
+        ],
+        "method": [
+          "GET",
+          "HEAD",
+          "PUT",
+          "POST",
+          "DELETE"
+        ],
+        "maxAgeSeconds": 3600
+      }
+    ]
+  },
+  "emulators": {
+    "storage": {
+      "port": 8080
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  }
+}
