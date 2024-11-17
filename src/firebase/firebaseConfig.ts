@@ -30,9 +30,113 @@ const db = getFirestore(app); // Firestore si nécessaire
 const storage = getStorage(app); // Storage si nécessaire
 
 let messaging: any = null;
-if (typeof window !== "undefined") {
-  messaging = getMessaging(app);
+
+const initializeFirebaseMessaging = async () => {
+  try {
+    const isMessagingSupported = await isSupported();
+    if (typeof window !== 'undefined' && isMessagingSupported) {
+      messaging = getMessaging(app);
+      console.log("Firebase Messaging initialized successfully");
+      return messaging;
+    } else {
+      console.log("Firebase Messaging is not supported in this environment");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error initializing Firebase Messaging:", error);
+    return null;
+  }
+};
+
+// Initialiser messaging de manière sécurisée
+if (typeof window !== 'undefined') {
+  initializeFirebaseMessaging().catch(console.error);
 }
+
+// Fonction pour demander le token FCM
+export const requestFCMToken = async () => {
+  if (!messaging) return null;
+  try {
+    const token = await getToken(messaging, {
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY
+    });
+    return token;
+  } catch (error) {
+    console.error("Error getting FCM token:", error);
+    return null;
+  }
+};
+
+// Fonction pour écouter les messages
+export const onMessageListener = () => {
+  if (!messaging) return Promise.resolve(null);
+  
+  return new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      resolve(payload);
+    });
+  });
+};
+
+export { auth, db, storage, app, analytics, messaging };
+
+const fetchProject = async (projectId) => {
+  const user = auth.currentUser;
+  if (!user) {
+    console.error("Utilisateur non authentifié");
+    return null;
+  }
+
+  const docRef = doc(db, "projects", projectId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const projectData = docSnap.data();
+    if (projectData.authorizedUsers.includes(user.uid) || user.admin) {
+      return projectData;
+    } else {
+      console.error("Accès refusé");
+      return null;
+    }
+  } else {
+    console.error("Projet non trouvé");
+    return null;
+  }
+};
+
+// Initialisation sécurisée de Firebase
+export const initializeFirebaseApp = () => {
+  try {
+    if (!getApps().length) {
+      const app = initializeApp(firebaseConfig);
+      console.log("Firebase initialized successfully");
+      return app;
+    } else {
+      return getApps()[0];
+    }
+  } catch (error) {
+    console.error("Error initializing Firebase:", error);
+    return null;
+  }
+};
+
+// Exporter initializeMessaging pour l'utiliser dans d'autres composants
+export const initializeMessaging = async () => {
+  try {
+    const isMessagingSupported = await isSupported();
+    if (typeof window !== 'undefined' && isMessagingSupported) {
+      messaging = getMessaging(app);
+      console.log("Firebase Messaging initialized successfully");
+      return messaging;
+    } else {
+      console.log("Firebase Messaging is not supported in this environment");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error initializing Firebase Messaging:", error);
+    return null;
+  }
+};
 
 // Fonction améliorée pour créer une notification
 export const createNotification = async (
@@ -85,96 +189,5 @@ export const createNotification = async (
     });
   } catch (error) {
     console.error("Erreur lors de la création de la notification:", error);
-  }
-};
-
-// Fonction pour initialiser la messagerie Firebase de manière sécurisée
-export const initializeMessaging = async (app) => {
-  try {
-    // Vérifier si la messagerie est supportée
-    const isMessagingSupported = await isSupported();
-    
-    if (isMessagingSupported) {
-      const messaging = getMessaging(app);
-      console.log("Firebase Messaging initialized successfully");
-      return messaging;
-    } else {
-      console.log("Firebase Messaging is not supported in this browser");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error initializing Firebase Messaging:", error);
-    return null;
-  }
-};
-
-// Fonction pour demander le token de messagerie
-export const requestFCMToken = async () => {
-  try {
-    const messaging = await initializeMessaging();
-    if (!messaging) return null;
-
-    const token = await getToken(messaging, {
-      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY
-    });
-    
-    return token;
-  } catch (error) {
-    console.error("Error getting FCM token:", error);
-    return null;
-  }
-};
-
-// Fonction pour écouter les messages en premier plan
-export const onMessageListener = () => {
-  if (typeof window !== "undefined" && messaging) {
-    return new Promise((resolve) => {
-      onMessage(messaging, (payload) => {
-        resolve(payload);
-      });
-    });
-  }
-  return Promise.resolve(null);
-};
-
-export { auth, db, storage, app, analytics, messaging };
-
-const fetchProject = async (projectId) => {
-  const user = auth.currentUser;
-  if (!user) {
-    console.error("Utilisateur non authentifié");
-    return null;
-  }
-
-  const docRef = doc(db, "projects", projectId);
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    const projectData = docSnap.data();
-    if (projectData.authorizedUsers.includes(user.uid) || user.admin) {
-      return projectData;
-    } else {
-      console.error("Accès refusé");
-      return null;
-    }
-  } else {
-    console.error("Projet non trouvé");
-    return null;
-  }
-};
-
-// Initialisation sécurisée de Firebase
-export const initializeFirebaseApp = () => {
-  try {
-    if (!getApps().length) {
-      const app = initializeApp(firebaseConfig);
-      console.log("Firebase initialized successfully");
-      return app;
-    } else {
-      return getApps()[0];
-    }
-  } catch (error) {
-    console.error("Error initializing Firebase:", error);
-    return null;
   }
 };
