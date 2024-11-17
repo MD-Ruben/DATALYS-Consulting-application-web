@@ -1,16 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var http_1 = require("http");
-var url_1 = require("url");
-var next_1 = require("next");
-var port = parseInt(process.env.PORT || '3001', 10);
-var dev = process.env.NODE_ENV !== 'production';
-var app = (0, next_1.default)({ dev: dev });
-var handle = app.getRequestHandler();
-app.prepare().then(function () {
-    (0, http_1.createServer)(function (req, res) {
-        var parsedUrl = (0, url_1.parse)(req.url, true);
-        handle(req, res, parsedUrl);
-    }).listen(port);
-    console.log("> Server listening at http://localhost:".concat(port, " as ").concat(dev ? 'development' : process.env.NODE_ENV));
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
+
+const dev = process.env.NODE_ENV !== 'production';
+const hostname = 'localhost';
+const port = parseInt(process.env.PORT || '3000', 10);
+
+// when using middleware `hostname` and `port` must be provided below
+const app = next({ dev, hostname, port });
+const handle = app.getRequestHandler();
+
+app.prepare().then(() => {
+  createServer(async (req, res) => {
+    try {
+      // Be sure to pass `true` as the second argument to `url.parse`.
+      // This tells it to parse the query portion of the URL.
+      const parsedUrl = parse(req.url, true);
+      await handle(req, res, parsedUrl);
+    } catch (err) {
+      console.error('Error occurred handling', req.url, err);
+      res.statusCode = 500;
+      res.end('Internal server error');
+    }
+  })
+    .once('error', (err) => {
+      console.error(err);
+      process.exit(1);
+    })
+    .listen(port, () => {
+      console.log(`> Ready on http://${hostname}:${port}`);
+    });
 });
