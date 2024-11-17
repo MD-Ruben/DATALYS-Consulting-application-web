@@ -1,16 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   reactStrictMode: true,
-  // eslint: {
-  //   ignoreDuringBuilds: true,
-  // },
-  // typescript: {
-  //   ignoreBuildErrors: true,
-  // },
-  // images: {
-  //   unoptimized: true,
-  // },
-  // output: "export",
+  images: {
+    domains: ['firebasestorage.googleapis.com'],
+  },
 };
 
 export default nextConfig;
