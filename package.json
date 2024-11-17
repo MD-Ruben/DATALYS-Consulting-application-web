@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production node server.js"
+    "start": "cross-env NODE_ENV=production PORT=3001 node server.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.6.1",
