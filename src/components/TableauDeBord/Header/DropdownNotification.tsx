@@ -6,6 +6,7 @@ import {
   db,
   requestFCMToken,
   onMessageListener,
+  initializeMessaging,
 } from "@/firebase/firebaseConfig";
 import {
   collection,
@@ -107,8 +108,34 @@ const DropdownNotification = () => {
       const user = auth.currentUser;
       if (user) {
         try {
+          // Initialiser la messagerie de manière sécurisée
+          const messaging = await initializeMessaging();
+          
+          if (messaging) {
+            // Continuer avec la logique de notification existante
+            onMessage(messaging, (payload) => {
+              if (payload.notification) {
+                const newNotification = {
+                  id: Date.now().toString(),
+                  title: payload.notification.title || "",
+                  body: payload.notification.body || "",
+                  timestamp: Timestamp.now(),
+                  read: false,
+                  link: payload.data?.link,
+                };
+
+                setNotifications((prev) => {
+                  const updatedNotifications = [newNotification, ...prev];
+                  checkUnreadNotifications(updatedNotifications);
+                  return updatedNotifications;
+                });
+              }
+            });
+          }
+
+          // Continuer avec le reste de la logique qui ne dépend pas de la messagerie
           const storedTimestamp = parseInt(
-            localStorage.getItem("lastReadNotification") || "0",
+            localStorage.getItem("lastReadNotification") || "0"
           );
           setLastReadTimestamp(storedTimestamp);
 
@@ -142,26 +169,6 @@ const DropdownNotification = () => {
 
             setNotifications(newNotifications);
             checkUnreadNotifications(newNotifications);
-          });
-
-          const messaging = getMessaging();
-          onMessage(messaging, (payload) => {
-            if (payload.notification) {
-              const newNotification = {
-                id: Date.now().toString(),
-                title: payload.notification.title || "",
-                body: payload.notification.body || "",
-                timestamp: Timestamp.now(),
-                read: false,
-                link: payload.data?.link,
-              };
-
-              setNotifications((prev) => {
-                const updatedNotifications = [newNotification, ...prev];
-                checkUnreadNotifications(updatedNotifications);
-                return updatedNotifications;
-              });
-            }
           });
 
           return () => unsubscribe();
