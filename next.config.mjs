@@ -11,7 +11,10 @@ const nextConfig = {
     domains: ['firebasestorage.googleapis.com'],
   },
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ['localhost:3001', '82.112.253.137'],
+      bodySizeLimit: '2mb'
+    }
   },
   async headers() {
     return [
