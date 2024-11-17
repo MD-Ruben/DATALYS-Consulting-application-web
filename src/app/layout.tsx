@@ -19,17 +19,21 @@ export default function RootLayout({
   }, []);
 
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js")
         .then((registration) => {
-          console.log('Service Worker enregistré avec succès:', registration);
+          console.log("Service Worker enregistré avec succès:", registration);
           requestFCMToken();
         })
         .catch((error) => {
-          console.error('Erreur lors de l\'enregistrement du Service Worker:', error);
+          console.error(
+            "Erreur lors de l'enregistrement du Service Worker:",
+            error,
+          );
         });
     } else {
-      console.warn('Service Worker non supporté dans ce navigateur.');
+      console.warn("Service Worker non supporté dans ce navigateur.");
     }
   }, []);
 
