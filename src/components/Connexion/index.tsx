@@ -13,6 +13,7 @@ const Connexion: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,6 +30,8 @@ const Connexion: React.FC = () => {
     // Nettoyer l'écouteur lors du démontage du composant
     return () => unsubscribe();
   }, [router]);
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,7 +114,8 @@ const Connexion: React.FC = () => {
                   label="Adresse email"
                   variant="flat"
                   placeholder="Entrer votre adresse email"
-                  className="max-w-sm"
+                  className="max-w-sm [&_input::placeholder]:text-black"
+                  size="lg"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   required
@@ -119,16 +123,68 @@ const Connexion: React.FC = () => {
               </div>
               <div>
                 <Input
-                  type="password"
+                  type={isVisible ? "text" : "password"}
                   color="primary"
                   label="Mot de passe"
                   variant="flat"
                   placeholder="Entrer votre mot de passe"
-                  className="max-w-sm"
+                  className="max-w-sm [&_input::placeholder]:text-black"
+                  size="lg"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                   required
+                  endContent={
+                    <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                    >
+                      {isVisible ? (
+                        <svg
+                          className="text-2xl text-default-400"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="text-2xl text-default-400"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 19.5c-4.73 0-8.76-2.93-10.5-7 1.74-4.07 5.77-7 10.5-7s8.76 2.93 10.5 7c-1.74 4.07-5.77 7-10.5 7zm0-14c-3.86 0-7.21 2.08-9 5 1.79 2.92 5.14 5 9 5s7.21-2.08 9-5c-1.79-2.92-5.14-5-9-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm0-4c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M2 4L22 20"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  }
                 />
+              </div>
+              <div className="flex justify-between items-center">
+                <Link
+                  href="/mot-de-passe-oublie"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Mot de passe oublié ?
+                </Link>
               </div>
               {error && <p className="text-red-500">{error}</p>}
               <Button
@@ -140,27 +196,14 @@ const Connexion: React.FC = () => {
                 {loading ? "Connexion..." : "Connexion"}
               </Button>
             </form>
-            <Link
-              className="mt-1 flex justify-start font-thin text-dark"
-              href="/"
-            >
-              Accéder aux différents utilisateurs.
-            </Link>
-            <div className="flex justify-center px-3 pb-4 pt-5">
-              <p className="text-dark">
+            <div className="flex justify-start py-4">
+              <p className="text-dark text-sm md:text-base">
                 All Rights Reserved by
                 <Link
                   className="ml-1 font-medium text-primary"
                   href="https://www.datalysconsulting.com/"
-                  target="_blank"
                 >
-                  DATALYS Consulting
-                </Link>
-                . Designed and Developed by{" "}
-                <Link className="text-primary" href="javascript:;">
-                  LA VICTOIRE
-                </Link>
-                .
+                  DATALYS Consulting</Link>
               </p>
             </div>
           </div>

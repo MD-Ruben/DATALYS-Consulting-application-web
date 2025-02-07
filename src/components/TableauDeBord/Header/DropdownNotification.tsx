@@ -292,7 +292,7 @@ const DropdownNotification = () => {
 
         <DropdownMenu
           aria-label="Notifications"
-          className="w-[360px] p-0"
+          className="relative z-50 overflow-y-scroll w-[360px] h-[400px] p-0"
           closeOnSelect={false}
         >
           <DropdownItem
@@ -317,7 +317,7 @@ const DropdownNotification = () => {
               className={cn(
                 "py-3",
                 getNotificationTimestamp(notification) > lastReadTimestamp &&
-                  "bg-default-100 dark:bg-default-50",
+                  "bg-default-100  dark:bg-default-50",
               )}
             >
               <div className="flex w-full items-start justify-between">
