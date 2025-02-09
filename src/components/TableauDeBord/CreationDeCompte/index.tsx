@@ -170,70 +170,93 @@ const CreerUnCompte = () => {
   return (
     <>
       <Breadcrumb pageName="Créer un compte" />
-      <div className="mt-5 w-full max-w-full rounded-[10px]">
-        <div className="mt-8 rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-          <div className="w-full max-w-full p-2">
-            <h3 className="pt-2 text-[22px] font-medium text-dark dark:text-white">
+      <div className="mx-auto mt-5 w-full max-w-3xl rounded-[10px]">
+        <div className="mt-8 rounded-[20px] bg-white p-8 shadow-1 dark:bg-gray-dark dark:shadow-card">
+          <div className="mb-8 text-center">
+            <h3 className="mb-2 text-[28px] font-bold text-dark dark:text-white">
               Créer un compte
             </h3>
+            <p className="text-base text-gray-600 dark:text-gray-400">
+              Remplissez les informations pour créer un nouveau compte utilisateur
+            </p>
           </div>
-          <div className="mt-4 rounded-lg shadow-sm">
-            <div className="grid grid-cols-1 gap-2 px-2 py-6 md:grid-cols-2 md:gap-4 md:py-4">
+
+          <div className="mt-8">
+            {error && (
+              <div className="mb-6 rounded-lg bg-red-100 p-4 text-red-700">
+                {error}
+              </div>
+            )}
+
+            <div className="space-y-10">
               <Input
                 type="text"
                 label="Nom"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre nom"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="lastName"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type="text"
                 label="Prénom"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre prénom"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="firstName"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type="text"
                 label="Nom d'utilisateur"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre nom d'utilisateur"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="username"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
-             
+
               <Input
-                type="text"
-                label="Adresse e-mail"
+                type="email"
+                label="Email"
                 variant="bordered"
                 color="primary"
-                placeholder="Entrer votre adresse e-mail"
-                className="text-sm font-medium md:text-base"
+                placeholder="Entrer votre email"
+                className="text-base"
                 name="email"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type={isPasswordVisible ? "text" : "password"}
                 label="Mot de passe"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre mot de passe"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="password"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
                 endContent={
                   <button
                     className="focus:outline-none"
@@ -278,16 +301,19 @@ const CreerUnCompte = () => {
                   </button>
                 }
               />
+
               <Input
                 type={isConfirmPasswordVisible ? "text" : "password"}
                 label="Confirmer le mot de passe"
                 variant="bordered"
                 color="primary"
                 placeholder="Veuillez confirmer votre mot de passe"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="confirmPassword"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
                 endContent={
                   <button
                     className="focus:outline-none"
@@ -332,70 +358,93 @@ const CreerUnCompte = () => {
                   </button>
                 }
               />
+
               <Input
                 type="text"
                 label="Poste"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre poste"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="function"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type="text"
                 label="Société"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer le nom de la société"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="company"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type="text"
                 label="Département de la société"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer le département"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="department"
                 onChange={handleChange}
                 required
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type="file"
                 label="Photo de profil"
                 variant="bordered"
                 color="primary"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 name="profileImage"
                 onChange={handleFileChange}
+                labelPlacement="outside"
+                size="lg"
               />
-               <Checkbox
-                isSelected={formData.isAdmin}
-                onChange={handleRoleChange}
-                color="primary"
-              >
-                Administrateur
-              </Checkbox>
-            </div>
-            {error && <p className="text-red-500">{error}</p>}
-            <div className="flex justify-center px-2 py-2">
-              <Button
-                color="primary"
-                className="w-64 flex-none"
-                variant="solid"
-                size="md"
-                onClick={handleSubmit}
-                isDisabled={loading}
-              >
-                {loading ? "Création..." : "Créer"}
-              </Button>
+
+              <div className="mt-2">
+                <Checkbox
+                  isSelected={formData.isAdmin}
+                  onChange={handleRoleChange}
+                  color="primary"
+                  size="sm"
+                  className="text-base"
+                >
+                  Administrateur
+                </Checkbox>
+              </div>
+
+              <div className="mt-8 text-center">
+                <Button
+                  color="primary"
+                  className="h-12 w-full max-w-md text-base font-medium"
+                  variant="solid"
+                  size="lg"
+                  onClick={handleSubmit}
+                  isDisabled={loading}
+                >
+                  {loading ? "Création en cours..." : "Créer le compte"}
+                </Button>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Tous les champs sont obligatoires sauf la photo de profil
+          </p>
         </div>
       </div>
     </>

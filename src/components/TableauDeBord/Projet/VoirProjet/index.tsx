@@ -477,16 +477,17 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
                 onClick={modal.onOpen}
                 variant="solid"
                 color="primary"
-                className="m-1 border-1 px-2 py-2 text-white md:px-4 md:py-4"
+                className="px-2 py-2 bg-white text-primary md:px-4 md:py-4 m-3"
                 onPress={() => handleOpen(size)}
               >
-                Ajouter un client{" "}
                 <Image
                   src="/images/icon/client.svg"
+                  className="bg-primary rounded-full"
                   width={15}
                   height={15}
                   alt=""
                 />
+                Ajouter un client{" "}
               </Button>
             )}
           </div>
@@ -508,61 +509,58 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
               />
             </div>
           </div>
-          <div className="mt-4 text-dark dark:text-white">
-            <div className="mx-auto mt-6 max-w-[720px]">
-              <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 md:gap-4">
-                <div className="mb-4 flex items-center gap-2">
-                  <h1 className="text-[18px] font-normal text-dark dark:text-white">
-                    Intitulé de projet:
-                  </h1>
-                  <Chip color="primary" variant="bordered">
-                    <span className="text-sm font-bold md:text-base">
-                      {projectData.intitule}
-                    </span>
-                  </Chip>
-                </div>
-                <div className="mb-4 flex items-center gap-2">
-                  <h1 className="text-[18px] font-normal text-dark dark:text-white">
-                    Entreprise:
-                  </h1>
-                  <Chip color="primary" variant="bordered">
-                    <span className="text-sm font-bold md:text-base">
-                      {projectData.societe}
-                    </span>
-                  </Chip>
-                </div>
-                <div className="mb-4 flex items-center gap-2">
-                  <h1 className="text-[18px] font-normal text-dark dark:text-white">
-                    Chef de projet:
-                  </h1>
-                  <Chip color="primary" variant="bordered">
-                    <span className="text-sm font-bold md:text-base">
-                      {projectData.chefDeProjet}
-                    </span>
-                  </Chip>
-                </div>
-                <div className="mb-4 flex items-center gap-2">
-                  <h1 className="text-[18px] font-normal text-dark dark:text-white">
-                    Domaine du projet:
-                  </h1>
-                  <Chip color="primary" variant="bordered">
-                    <span className="text-sm font-bold md:text-base">
-                      {Array.isArray(projectData.domaine)
-                        ? projectData.domaine.join(", ")
-                        : projectData.domaine || "Non spécifié"}
-                    </span>
-                  </Chip>
-                </div>
-                <div className="mb-4 flex items-center gap-2">
-                  <h1 className="text-[18px] font-normal text-dark dark:text-white">
-                    Date de création du projet:
-                  </h1>
-                  <Chip color="primary" variant="bordered">
-                    <span className="text-sm font-bold md:text-base">
-                      {projectData.createdAt.toDate().toLocaleDateString()}
-                    </span>
-                  </Chip>
-                </div>
+          <div className="mt-8">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {/* Intitulé */}
+              <div className="rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+                <h4 className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Intitulé du projet
+                </h4>
+                <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {projectData.intitule}
+                </p>
+              </div>
+
+              {/* Entreprise */}
+              <div className="rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+                <h4 className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Entreprise
+                </h4>
+                <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {projectData.societe}
+                </p>
+              </div>
+
+              {/* Chef de projet */}
+              <div className="rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+                <h4 className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Chef de projet
+                </h4>
+                <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {projectData.chefDeProjet}
+                </p>
+              </div>
+
+              {/* Domaine */}
+              <div className="rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+                <h4 className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Domaine du projet
+                </h4>
+                <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {Array.isArray(projectData.domaine)
+                    ? projectData.domaine.join(", ")
+                    : projectData.domaine || "Non spécifié"}
+                </p>
+              </div>
+
+              {/* Date de création */}
+              <div className="rounded-xl bg-gray-50 p-6 dark:bg-gray-800">
+                <h4 className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Date de création
+                </h4>
+                <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {projectData.createdAt.toDate().toLocaleDateString()}
+                </p>
               </div>
             </div>
           </div>

@@ -137,27 +137,32 @@ const ChangerMotDePasse = () => {
   return (
     <>
       <Breadcrumb pageName="Changer votre mot de passe" />
-      <div className="mt-5 w-full max-w-full rounded-[10px]">
-        <div className="mt-8 rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-          <div className="w-full max-w-full p-2">
-            <h3 className="pt-2 text-[22px] font-medium text-dark dark:text-white">
+      <div className="mx-auto mt-5 w-full max-w-3xl rounded-[10px]">
+        <div className="mt-8 rounded-[20px] bg-white p-8 shadow-1 dark:bg-gray-dark dark:shadow-card">
+          <div className="mb-8 text-center">
+            <h3 className="mb-2 text-[28px] font-bold text-dark dark:text-white">
               Changer votre mot de passe
             </h3>
+            <p className="text-base text-gray-600 dark:text-gray-400">
+              Assurez-vous d'utiliser un mot de passe fort et unique
+            </p>
           </div>
-          <div className="mt-4 rounded-lg shadow-sm">
+
+          <div className="mt-8">
             {error && (
-              <div className="mx-2 mb-4 rounded-lg bg-red-100 p-4 text-red-700">
+              <div className="mb-6 rounded-lg bg-red-100 p-4 text-red-700">
                 {error}
               </div>
             )}
-            <div className="grid grid-cols-1 gap-2 px-2 py-6 md:grid-cols-2 md:gap-4 md:py-4">
+
+            <div className="space-y-10">
               <Input
                 type={isCurrentPasswordVisible ? "text" : "password"}
                 label="Mot de passe actuel"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre mot de passe actuel"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 required
@@ -204,14 +209,17 @@ const ChangerMotDePasse = () => {
                     )}
                   </button>
                 }
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type={isNewPasswordVisible ? "text" : "password"}
                 label="Nouveau mot de passe"
                 variant="bordered"
                 color="primary"
                 placeholder="Entrer votre nouveau mot de passe"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
@@ -258,14 +266,17 @@ const ChangerMotDePasse = () => {
                     )}
                   </button>
                 }
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type={isConfirmPasswordVisible ? "text" : "password"}
                 label="Confirmer le nouveau mot de passe"
                 variant="bordered"
                 color="primary"
                 placeholder="Confirmer votre nouveau mot de passe"
-                className="text-sm font-medium md:text-base"
+                className="text-base"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -312,29 +323,46 @@ const ChangerMotDePasse = () => {
                     )}
                   </button>
                 }
+                labelPlacement="outside"
+                size="lg"
               />
-            </div>
-            <div className="px-2 py-2">
-              <Checkbox
-                isSelected={keepOtherSessionsActive}
-                onValueChange={setKeepOtherSessionsActive}
-              >
-                Garder les autres sessions actives
-              </Checkbox>
-            </div>
-            <div className="flex justify-center px-2 py-2">
-              <Button
-                color="primary"
-                className="w-64 flex-none"
-                variant="solid"
-                size="md"
-                onPress={handlePasswordChange}
-                isLoading={loading}
-              >
-                Changer le mot de passe
-              </Button>
+
+              <div className="mt-2">
+                <Checkbox
+                  isSelected={keepOtherSessionsActive}
+                  onValueChange={setKeepOtherSessionsActive}
+                  size="sm"
+                  className="text-base"
+                >
+                  Garder les autres sessions actives
+                </Checkbox>
+              </div>
+
+              <div className="mt-8 text-center">
+                <Button
+                  color="primary"
+                  className="h-12 w-full max-w-md text-base font-medium"
+                  variant="solid"
+                  size="lg"
+                  onPress={handlePasswordChange}
+                  isLoading={loading}
+                >
+                  {loading ? (
+                    "Modification en cours..."
+                  ) : (
+                    "Changer le mot de passe"
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Le mot de passe doit contenir au moins 8 caractères, une majuscule,
+            une minuscule, un chiffre et un caractère spécial.
+          </p>
         </div>
       </div>
     </>
