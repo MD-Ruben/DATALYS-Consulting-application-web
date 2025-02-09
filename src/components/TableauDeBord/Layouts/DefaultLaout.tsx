@@ -25,21 +25,25 @@ export default function DefaultLayout({
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Star ===== --> */}
-          <main>
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-              {children}
-              <div className="mt-5 flex justify-center">
-                <p className="text-dark text-sm md:text-base">
-                  All Rights Reserved by
-                  <Link
-                    className="ml-1 font-medium text-primary"
-                    href="https://www.datalysconsulting.com/"
-                    target="_blank"
-                  >
-                    DATALYS Consulting
-                  </Link>
-                </p>
+          <main className="flex-1">
+            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 flex flex-col min-h-[calc(100vh-80px)]">
+              <div className="flex-1">
+                {children}
               </div>
+              <footer className="mt-auto py-4">
+                <div className="flex justify-center">
+                  <p className="text-dark text-sm md:text-base">
+                    All Rights Reserved by
+                    <Link
+                      className="ml-1 font-medium text-primary"
+                      href="https://www.datalysconsulting.com/"
+                      target="_blank"
+                    >
+                      DATALYS Consulting
+                    </Link>
+                  </p>
+                </div>
+              </footer>
             </div>
           </main>
           {/* <!-- ===== Main Content End ===== --> */}

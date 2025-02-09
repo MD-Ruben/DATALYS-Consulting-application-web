@@ -21,7 +21,7 @@ const MotDePasseOublie = () => {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
       setMessage({
-        text: "Un email de réinitialisation a été envoyé à votre adresse email.",
+        text: "Un email de réinitialisation a été envoyé à votre adresse email. Il se peut qu'il se trouve dans vos spams.",
         type: 'success'
       });
       setEmail("");
@@ -91,7 +91,11 @@ const MotDePasseOublie = () => {
                 label="Adresse email"
                 variant="flat"
                 placeholder="Entrer votre adresse email"
-                className="max-w-sm [&_input::placeholder]:text-black"
+                className="max-w-sm [&_input::placeholder]:text-black text-base"
+                classNames={{
+                  input: "text-base",
+                  label: "text-base"
+                }}
                 size="lg"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -108,13 +112,14 @@ const MotDePasseOublie = () => {
                 type="submit"
                 color="primary"
                 variant="solid"
+                className="max-w-sm"
                 disabled={loading}
               >
                 {loading ? "Envoi en cours..." : "Envoyer le lien"}
               </Button>
               <Link
                 href="/"
-                className="text-center text-sm text-primary hover:underline"
+                className="text-start text-sm text-primary hover:underline"
               >
                 Retour à la connexion
               </Link>

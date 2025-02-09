@@ -115,6 +115,10 @@ const Connexion: React.FC = () => {
                   variant="flat"
                   placeholder="Entrer votre adresse email"
                   className="max-w-sm [&_input::placeholder]:text-black"
+                  classNames={{
+                    input: "text-base",
+                    label: "text-base"
+                  }}
                   size="lg"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
@@ -128,7 +132,11 @@ const Connexion: React.FC = () => {
                   label="Mot de passe"
                   variant="flat"
                   placeholder="Entrer votre mot de passe"
-                  className="max-w-sm [&_input::placeholder]:text-black"
+                  className="max-w-sm [&_input::placeholder]:text-black text-base"
+                  classNames={{
+                    input: "text-base",
+                    label: "text-base"
+                  }}
                   size="lg"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}

@@ -106,16 +106,17 @@ const Header = (props: {
           </Link>
         </div>
 
-        <div className="hidden xl:block">
-          <div>
-            <h1 className="mb-0.5 text-heading-5 font-bold text-dark dark:text-white">
-              Tableau de bord
-            </h1>
-            {/* Afficher M. suivi du prénom et nom de l'utilisateur */}
-            <p className="font-medium">
-              Tableau de bord de M. {userName.firstName} {userName.lastName}
-            </p>
-          </div>
+        <div className="hidden xl:block"> 
+          {window.location.pathname === '/tableaudebord' && (
+            <div>
+              <h1 className="mb-0.5 text-heading-5 font-bold text-dark dark:text-white">
+                Tableau de bord
+              </h1>
+              <p className="font-medium">
+                Tableau de bord de M. {userName.firstName} {userName.lastName}
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-normal gap-2 2xsm:gap-4 lg:w-full lg:justify-between xl:w-auto xl:justify-normal">
