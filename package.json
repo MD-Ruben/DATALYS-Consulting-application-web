@@ -8,6 +8,8 @@
     "start": "cross-env NODE_ENV=production PORT=3001 node server.js"
   },
   "dependencies": {
+    "core-js": "^3.35.0",
+    "regenerator-runtime": "^0.14.1",
     "@clerk/nextjs": "^5.6.1",
     "@nextui-org/badge": "^2.0.31",
     "@nextui-org/button": "^2.0.37",
