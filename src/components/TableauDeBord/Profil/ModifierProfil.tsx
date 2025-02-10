@@ -105,7 +105,7 @@ const ModifierProfil: React.FC<ModifierProfilProps> = ({ userData, onClose, onUp
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
+            <ModalHeader className="flex flex-col gap-1 pb-17 md:pb-0">
               Modifier le Profil
             </ModalHeader>
             <ModalBody>
@@ -114,7 +114,7 @@ const ModifierProfil: React.FC<ModifierProfilProps> = ({ userData, onClose, onUp
                   {error}
                 </div>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 <Input
                   type="text"
                   name="lastName"

@@ -50,7 +50,7 @@ const FileList: React.FC<FileListProps> = ({ files, onFileDeleted }) => {
   return (
     <div>
       {/* En-tête du tableau */}
-      <div className="mb-2 grid grid-cols-4 overflow-x-scroll rounded-md bg-dark-3 p-3 text-xs font-normal scrollbar-hide md:text-base">
+      <div className="mb-2 grid grid-cols-4 overflow-x-scroll rounded-md p-3 text-xs font-normal scrollbar-hide md:text-base">
         <div className="text-dark dark:text-white">Nom du fichier</div>
         <div className="text-dark dark:text-white">Date d'ajout</div>
         <div className="text-dark dark:text-white">Taille</div>

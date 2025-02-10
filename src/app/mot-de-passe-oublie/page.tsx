@@ -31,7 +31,7 @@ const MotDePasseOublie = () => {
         case 'auth/invalid-email':
           errorMessage = "L'adresse email n'est pas valide.";
           break;
-        case 'auth/user-not-found':
+        case 'auth/user-not-found': 
           errorMessage = "Aucun compte n'est associé à cette adresse email.";
           break;
       }
@@ -91,10 +91,11 @@ const MotDePasseOublie = () => {
                 label="Adresse email"
                 variant="flat"
                 placeholder="Entrer votre adresse email"
-                className="max-w-sm [&_input::placeholder]:text-black text-base"
+                className="max-w-sm"
                 classNames={{
-                  input: "text-base",
-                  label: "text-base"
+                  input: "text-black dark:text-white",
+                  label: "text-base",
+                  inputWrapper: "[&_input::placeholder]:text-default-500"
                 }}
                 size="lg"
                 value={email}

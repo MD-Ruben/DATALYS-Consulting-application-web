@@ -95,7 +95,7 @@ const VoirProfil = () => {
               </div>
               <div className="col-span-12 md:col-span-9">
                 <div className="rounded-lg border-stroke bg-white p-6 shadow dark:border-stroke-dark dark:bg-gray-dark">
-                  <h2 className="mb-4 text-xl font-bold">Voir Votre profil</h2>
+                  <h2 className="mb-4 text-xl font-bold">Voir votre profil</h2>
                   <div className="mt-4 rounded-lg shadow-sm">
                     <div className="grid grid-cols-1 gap-2 px-2 py-6 md:grid-cols-2 md:gap-4 md:py-4">
                       <p className="text-base font-extrabold tracking-wide text-dark dark:text-white">

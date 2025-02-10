@@ -114,10 +114,11 @@ const Connexion: React.FC = () => {
                   label="Adresse email"
                   variant="flat"
                   placeholder="Entrer votre adresse email"
-                  className="max-w-sm [&_input::placeholder]:text-black"
+                  className="max-w-sm"
                   classNames={{
-                    input: "text-base",
-                    label: "text-base"
+                    input: "text-black dark:text-white",
+                    label: "text-base",
+                    inputWrapper: "[&_input::placeholder]:text-default-500"
                   }}
                   size="lg"
                   onChange={(e) => setEmail(e.target.value)}
@@ -132,10 +133,11 @@ const Connexion: React.FC = () => {
                   label="Mot de passe"
                   variant="flat"
                   placeholder="Entrer votre mot de passe"
-                  className="max-w-sm [&_input::placeholder]:text-black text-base"
+                  className="max-w-sm"
                   classNames={{
-                    input: "text-base",
-                    label: "text-base"
+                    input: "text-black dark:text-white",
+                    label: "text-base",
+                    inputWrapper: "[&_input::placeholder]:text-default-500"
                   }}
                   size="lg"
                   onChange={(e) => setPassword(e.target.value)}

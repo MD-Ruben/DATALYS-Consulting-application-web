@@ -35,7 +35,7 @@ import FileList from "@/components/TableauDeBord/Projet/VoirProjet/File/FileList
 import Image from "next/image";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { app } from "@/firebase/firebaseConfig"; 
+import { app } from "@/firebase/firebaseConfig";
 
 // Définir les interfaces pour Folder et File
 interface Folder {
@@ -43,7 +43,7 @@ interface Folder {
   name: string;
   parentFolderId: string | null;
   projectId: string;
-  type: 'folder';
+  type: "folder";
   isPrivate?: boolean;
 }
 
@@ -88,7 +88,9 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const modal = useDisclosure();
-  const [size, setSize] = React.useState<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "full">("2xl");
+  const [size, setSize] = React.useState<
+    "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "full"
+  >("2xl");
   const sizes = "2xl";
 
   const handleOpen = (newSize: typeof size) => {
@@ -126,14 +128,14 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
     try {
       const usersSnapshot = await getDocs(collection(db, "users"));
       const usersList = usersSnapshot.docs
-        .map(doc => ({
+        .map((doc) => ({
           id: doc.id,
           ...doc.data(),
           name: `${doc.data().firstName} ${doc.data().lastName}`,
           username: doc.data().username,
           profileImage: doc.data().profileImage || "/images/user.png",
         }))
-        .filter(user => !user.isAdmin); // Ne garder que les utilisateurs non-admin
+        .filter((user) => !user.isAdmin); // Ne garder que les utilisateurs non-admin
 
       setNonAdminUsers(usersList);
       setFilteredUsers(usersList);
@@ -149,10 +151,11 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
 
   // Effet pour filtrer les utilisateurs selon la recherche
   useEffect(() => {
-    const filtered = nonAdminUsers.filter(user => 
-      user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email?.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = nonAdminUsers.filter(
+      (user) =>
+        user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setFilteredUsers(filtered);
   }, [searchQuery, nonAdminUsers]);
@@ -192,13 +195,16 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
             console.log("Données du projet récupérées:", projectData);
 
             if (
-              userData.isAdmin || 
-              (projectData.authorizedUsers && projectData.authorizedUsers.includes(user.uid))
+              userData.isAdmin ||
+              (projectData.authorizedUsers &&
+                projectData.authorizedUsers.includes(user.uid))
             ) {
               setHasAccess(true);
               setProjectData(projectData);
             } else {
-              console.log("Accès refusé : l'utilisateur n'a pas les permissions nécessaires.");
+              console.log(
+                "Accès refusé : l'utilisateur n'a pas les permissions nécessaires.",
+              );
             }
           } else {
             console.log("Aucune donnée trouvée pour ce projet.");
@@ -256,7 +262,10 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
       modal.onClose();
       console.log("Utilisateurs autorisés mis à jour avec succès.");
     } catch (error) {
-      console.error("Erreur lors de la mise à jour des utilisateurs autorisés :", error);
+      console.error(
+        "Erreur lors de la mise à jour des utilisateurs autorisés :",
+        error,
+      );
     }
   };
 
@@ -306,10 +315,11 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
 
       // Récupérer les dossiers du projet actuel
       const folderSnapshot = await getDocs(
-        query(collection(db, "Folders"), 
+        query(
+          collection(db, "Folders"),
           where("projectId", "==", projectId),
-          where("parentFolderId", "==", parentFolderId) // Ne récupérer que les dossiers du niveau actuel
-        )
+          where("parentFolderId", "==", parentFolderId), // Ne récupérer que les dossiers du niveau actuel
+        ),
       );
 
       // Filtrer les dossiers
@@ -321,19 +331,20 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
         .filter((folder) => {
           // Si l'utilisateur est admin, il voit tout
           if (isUserAdmin) return true;
-          
+
           // Si le dossier est privé et l'utilisateur n'est pas admin, il ne le voit pas
           if (folder.isPrivate) return false;
-          
+
           return true;
         });
 
       // Récupérer les fichiers du projet actuel
       const fileSnapshot = await getDocs(
-        query(collection(db, "files"), 
+        query(
+          collection(db, "files"),
           where("projectId", "==", projectId),
-          where("parentFolderId", "==", parentFolderId) // Ne récupérer que les fichiers du niveau actuel
-        )
+          where("parentFolderId", "==", parentFolderId), // Ne récupérer que les fichiers du niveau actuel
+        ),
       );
 
       // Filtrer les fichiers
@@ -345,17 +356,20 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
         .filter((file) => {
           // Si l'utilisateur est admin, il voit tout
           if (isUserAdmin) return true;
-          
+
           // Si le fichier est privé et l'utilisateur n'est pas admin, il ne le voit pas
           if (file.isPrivate) return false;
-          
+
           return true;
         });
 
       setFolders(folderList);
       setFiles(fileList);
     } catch (error) {
-      console.error("Erreur lors de la récupération des dossiers et fichiers:", error);
+      console.error(
+        "Erreur lors de la récupération des dossiers et fichiers:",
+        error,
+      );
     }
   };
 
@@ -369,7 +383,7 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
       }
 
       const folderData = folderDoc.data();
-      
+
       // Vérifier que le dossier appartient bien au projet actuel
       if (folderData.projectId !== projectId) {
         console.error("Ce dossier n'appartient pas au projet actuel");
@@ -379,7 +393,7 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
       // Mettre à jour le chemin et le dossier parent
       setParentFolderId(folderId);
       setCurrentPath([...currentPath, folderName]);
-      
+
       // Rafraîchir la liste des dossiers et fichiers pour le nouveau dossier parent
       await fetchFoldersAndFiles();
     } catch (error) {
@@ -400,10 +414,11 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
         } else {
           // Sinon, on récupère l'ID du dossier parent
           const parentFolderSnapshot = await getDocs(
-            query(collection(db, "Folders"),
+            query(
+              collection(db, "Folders"),
               where("projectId", "==", projectId),
-              where("name", "==", newPath[newPath.length - 1])
-            )
+              where("name", "==", newPath[newPath.length - 1]),
+            ),
           );
 
           if (!parentFolderSnapshot.empty) {
@@ -470,35 +485,41 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
     <>
       <Breadcrumb pageName="Information du projet" />
       <div className="mt-5 overflow-hidden rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-        <div className="relative flex h-35 bg-[#46adb6] md:h-65">
-          <div className="absolute bottom-0 right-0">
+        {/* En-tête avec bannière - Modifié pour meilleure réactivité */}
+        <div className="relative flex min-h-[160px] flex-col bg-[#46adb6] p-4 md:min-h-[200px]">
+          {/* Titre centré */}
+          <div className="mb-4 text-center md:mb-0 md:mt-4">
+            <h3 className="text-xl font-medium text-white md:text-2xl lg:text-4xl">
+              Informations sur le projet
+            </h3>
+          </div>
+
+          {/* Bouton Admin - Repositionné */}
+          <div className="mt-auto flex w-full justify-center px-4 md:absolute md:bottom-4 md:right-4 md:w-auto md:px-0">
             {isUserAdmin && (
               <Button
                 onClick={modal.onOpen}
                 variant="solid"
                 color="primary"
-                className="px-2 py-2 bg-white text-primary md:px-4 md:py-4 m-3"
+                className="min-w-[200px] bg-white px-4 py-2 text-primary shadow-md transition-transform hover:scale-105 dark:bg-gray-800 md:w-auto"
                 onPress={() => handleOpen(size)}
               >
-                <Image
-                  src="/images/icon/client.svg"
-                  className="bg-primary rounded-full"
-                  width={15}
-                  height={15}
-                  alt=""
-                />
-                Ajouter un client{" "}
+                <div className="flex items-center justify-center gap-2">
+                  <Image
+                    src="/images/icon/client.svg"
+                    className="h-5 w-5 rounded-full bg-primary p-1"
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                  <span>Ajouter un client</span>
+                </div>
               </Button>
             )}
           </div>
-          <div className="absolute left-0 right-0 top-0 md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
-            <h3 className="text-center text-xl font-light text-white md:text-4xl">
-              Informations sur le projet
-            </h3>
-          </div>
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
-          <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-[176px] sm:p-3">
+          <div className="hidden md:block relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-[176px] sm:p-3">
             <div className="relative drop-shadow-2">
               <Image
                 src="/images/logo-datalys-rvb.jpg"
@@ -575,7 +596,7 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
               <h3 className="w-full pt-2 text-[22px] font-medium text-dark dark:text-white md:text-[27px]">
                 Explorateur de fichiers
               </h3>
-              <div className="mb-2 flex items-center gap-1 md:gap-2">
+              <div className="flex flex-col items-center gap-2 md:flex-row">
                 {isUserAdmin && (
                   <>
                     <CreateFolderModal
@@ -715,7 +736,9 @@ const VoirProjet: React.FC<{ id: string }> = ({ id }) => {
                     url: user.profileImage,
                     role: user.function,
                   }}
-                  className={authorizedUsers.includes(user.id) ? "active-class" : ""}
+                  className={
+                    authorizedUsers.includes(user.id) ? "active-class" : ""
+                  }
                 />
               ))}
             </CheckboxGroup>

@@ -133,7 +133,7 @@ const FileItem: React.FC<FileItemProps> = ({ file, onFileDeleted }) => {
 
   return (
     <>
-      <div className="cursor-pointer rounded-md p-3 hover:bg-dark-3">
+      <div className="cursor-pointer rounded-md p-3">
         <div className="max-w-screen grid w-full grid-cols-4 overflow-x-scroll text-xs scrollbar-hide md:text-base">
           <div
             className="flex items-center gap-2"
