@@ -126,15 +126,19 @@ const ModifierProjet: React.FC<ModifierProjetProps> = ({ id }) => {
   return (
     <>
       <Breadcrumb pageName="Modifier le projet" />
-      <div className="mt-5 w-full max-w-full rounded-[10px]">
-        <div className="mt-8 rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-          <div className="w-full max-w-full p-2">
-            <h3 className="pt-2 text-[22px] font-medium text-dark dark:text-white">
+      <div className="mx-auto mt-5 w-full max-w-3xl rounded-[10px]">
+        <div className="mt-8 rounded-[20px] bg-white p-8 shadow-1 dark:bg-gray-dark dark:shadow-card">
+          <div className="mb-8 text-center">
+            <h3 className="mb-2 text-[28px] font-bold text-dark dark:text-white">
               Modifier le projet
             </h3>
+            <p className="text-base text-gray-600 dark:text-gray-400">
+              Modifiez les informations du projet
+            </p>
           </div>
-          <div className="mt-4 rounded-lg shadow-sm">
-            <div className="grid grid-cols-2 gap-4 px-2 py-6 md:py-4">
+
+          <div className="mt-8">
+            <div className="space-y-10">
               <Input
                 type="text"
                 label="Intitulé du projet"
@@ -143,8 +147,11 @@ const ModifierProjet: React.FC<ModifierProjetProps> = ({ id }) => {
                 name="intitule"
                 value={projectData.intitule}
                 onChange={handleChange}
-                className="text-sm font-medium md:text-base"
+                className="text-base"
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Input
                 type="text"
                 label="Nom de la société"
@@ -153,10 +160,11 @@ const ModifierProjet: React.FC<ModifierProjetProps> = ({ id }) => {
                 name="societe"
                 value={projectData.societe}
                 onChange={handleChange}
-                className="text-sm font-medium md:text-base"
+                className="text-base"
+                labelPlacement="outside"
+                size="lg"
               />
-            </div>
-            <div className="grid grid-cols-2 gap-4 px-2 py-6 md:py-4">
+
               <Input
                 type="text"
                 label="Nom du chef de projet"
@@ -165,8 +173,11 @@ const ModifierProjet: React.FC<ModifierProjetProps> = ({ id }) => {
                 name="chefDeProjet"
                 value={projectData.chefDeProjet}
                 onChange={handleChange}
-                className="text-sm font-medium md:text-base"
+                className="text-base"
+                labelPlacement="outside"
+                size="lg"
               />
+
               <Select
                 label="Domaine du projet"
                 variant="bordered"
@@ -177,7 +188,9 @@ const ModifierProjet: React.FC<ModifierProjetProps> = ({ id }) => {
                   const selectedDomaines = Array.from(keys) as string[];
                   setProjectData(prev => ({ ...prev, domaine: selectedDomaines }));
                 }}
-                className="text-sm font-medium md:text-base"
+                className="text-base"
+                labelPlacement="outside"
+                size="lg"
               >
                 {domaines.map((domaine) => (
                   <SelectItem key={domaine.key} value={domaine.key}>
@@ -185,17 +198,18 @@ const ModifierProjet: React.FC<ModifierProjetProps> = ({ id }) => {
                   </SelectItem>
                 ))}
               </Select>
-            </div>
-            <div className="flex justify-center px-2 py-2">
-              <Button
-                color="primary"
-                className="w-64 flex-none"
-                variant="solid"
-                size="md"
-                onPress={handleUpdate}
-              >
-                Modifier
-              </Button>
+
+              <div className="mt-8 text-center">
+                <Button
+                  color="primary"
+                  className="h-12 w-full max-w-md text-base font-medium"
+                  variant="solid"
+                  size="lg"
+                  onPress={handleUpdate}
+                >
+                  Modifier le projet
+                </Button>
+              </div>
             </div>
           </div>
         </div>
